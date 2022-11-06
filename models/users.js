@@ -29,7 +29,7 @@ const userSchema = new Schema({
 },{
     toJSON:{virtuals:true},
     id:false,
-})
+});
 
 userSchema.virtual("friendAccount").get(function(){return this.friends.length});
 
