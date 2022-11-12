@@ -36,7 +36,10 @@ const thoughtsController = {
     },
 
     editThoughts(req, res) {
-        thoughts.findOneAndUpdate({                 })
+        thoughts.findOneAndUpdate({_id: req.params.thoughtsID},{$set: req.body}, { runValidators: true, new: true})
+        .then((userDataDB) => {
+            res.json(userDataDB);
+        })
     }
     
 
