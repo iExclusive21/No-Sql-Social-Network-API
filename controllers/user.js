@@ -1,4 +1,4 @@
-const { user } = require('../models')
+const { User } = require('../models')
 
 const userControllers = {
    
