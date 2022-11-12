@@ -1,6 +1,7 @@
 const mongodb = require('mongodb').MongoClient;
 const express = require('express');
 const mongoose = require('mongoose');
+const routes = require('./routes');
 
 const app = express();
 const port = 7001;
@@ -22,6 +23,7 @@ mongodb.connect(
     }
 
 )
+app.use(routes)
 app.use(express.json());
 app.post('/create', (req, res) => {
     db.collection('socialNetwork').insertOne(
