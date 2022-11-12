@@ -1,7 +1,7 @@
 const { user } = require('../models')
 
-const userController = {
-    // get all users
+const userControllers = {
+   
     getAllUsers(req, res) {
       User.find()
         .select('-__v')
@@ -13,24 +13,7 @@ const userController = {
           res.status(500).json(err);
         });
     },
-    // get single user by id
-    getSingleUser(req, res) {
-      User.findOne({ _id: req.params.userId })
-        .select('-__v')
-        .populate('friends')
-        .populate('thoughts')
-        .then((userDataDB) => {
-          if (!userDataDB) {
-            return res.status(404).json({ message: 'No user mentioned wwith this id!' });
-          }
-          res.json(userDataDB);
-        })
-        .catch((err) => {
-          console.log(err);
-          res.status(500).json(err);
-        });
-    },
-    // create a new user
+   
     createNewUser(req, res) {
       User.create(req.body)
         .then((userDataDB) => {
@@ -41,6 +24,24 @@ const userController = {
           res.status(500).json(err);
         });
     },
+   
+    getSingleUser(req, res) {
+      User.findOne({ _id: req.params.userId })
+        .select('-__v')
+        .populate('friends')
+        .populate('thoughts')
+        .then((userDataDB) => {
+          if (!userDataDB) {
+            return res.status(404).json({ message: 'No user matches this id!' });
+          }
+          res.json(userDataDB);
+        })
+        .catch((err) => {
+          console.log(err);
+          res.status(500).json(err);
+        });
+    },
+   
   
     editUser(req, res) {
       User.findOneAndUpdate(
@@ -70,7 +71,7 @@ const userController = {
           }
         })
         .then(() => {
-          res.json({ message: 'User and associated thoughts deleted!' });
+          res.json({ message: 'User thoughts deleted!' });
         })
         .catch((err) => {
           console.log(err);
@@ -104,4 +105,4 @@ const userController = {
     },
   };
   
-  module.exports = userController;
+  module.exports = userControllers;
