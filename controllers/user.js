@@ -5,8 +5,8 @@ const userControllers = {
     getAllUsers(req, res) {
       User.find()
         .select('-__v')
-        .then((userDataDB) => {
-          res.json(userDataDB);
+        .then((socialNetworkDb) => {
+          res.json(socialNetworkDb);
         })
         .catch((err) => {
           console.log(err);
@@ -16,8 +16,8 @@ const userControllers = {
    
     createNewUser(req, res) {
       User.create(req.body)
-        .then((userDataDB) => {
-          res.json(userDataDB);
+        .then((socialNetworkDb) => {
+          res.json(socialNetworkDb);
         })
         .catch((err) => {
           console.log(err);
@@ -30,11 +30,11 @@ const userControllers = {
         .select('-__v')
         .populate('friends')
         .populate('thoughts')
-        .then((userDataDB) => {
-          if (!userDataDB) {
+        .then((socialNetworkDb) => {
+          if (!socialNetworkDb) {
             return res.status(404).json({ message: 'No user matches this id!' });
           }
-          res.json(userDataDB);
+          res.json(socialNetworkDb);
         })
         .catch((err) => {
           console.log(err);
@@ -52,11 +52,11 @@ const userControllers = {
           new: true,
         }
       )
-        .then((userDataDB) => {
-          if (!userDataDB) {
+        .then((socialNetworkDb) => {
+          if (!socialNetworkDb) {
             return res.status(404).json({ message: 'No user with this id!' });
           }
-          res.json(userDataDB);
+          res.json(socialNetworkDb);
         })
         .catch((err) => {
           console.log(err);
@@ -65,8 +65,8 @@ const userControllers = {
     },
     deleteUser(req, res) {
       User.findOneAndDelete({ _id: req.params.userId })
-        .then((userDataDB) => {
-          if (!userDataDB) {
+        .then((socialNetworkDb) => {
+          if (!socialNetworkDb) {
             return res.status(404).json({ message: 'No user with this id!' });
           }
         })
@@ -82,9 +82,9 @@ const userControllers = {
   
     addFriend(req, res) {
       User.findOneAndUpdate({_id:req.params.userId}, {$push:{ friends: req.params.friendId } }, { new: true })
-        .then((userDataDB) => {
+        .then((socialNetworkDb) => {
           console.log("friend added")
-          res.json(userDataDB);
+          res.json(socialNetworkDb);
         })
         .catch((err) => {
           console.log(err);
@@ -94,9 +94,9 @@ const userControllers = {
   
     removeFriend(req, res) {
       User.findOneAndUpdate({ _id: req.params.userId }, { $pull: { friends: req.params.friendId } },{ new: true })
-        .then((userDataDB) => {
+        .then((socialNetworkDb) => {
          
-          res.json(userDataDB);
+          res.json(socialNetworkDb);
         })
         .catch((err) => {
           console.log(err);

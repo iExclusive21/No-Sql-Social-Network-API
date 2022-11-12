@@ -15,8 +15,8 @@ const thoughtsController = {
 
     getThoughtsByID(req, res){
         thoughts.findOne({ _id: req.params.thoughtsID})
-        .then((socialNetworkDb) => {
-            res.json(socialNetworkDb);
+        .then((socialNetwork) => {
+            res.json(socialNetwork);
         })
         .catch((err) => {
             console.log(err);
@@ -27,7 +27,7 @@ const thoughtsController = {
 
     createNewThoughts(req, res){
         thoughts.create(req.body)
-        .then((userDataDB)=>{
+        .then((socialNetwork)=>{
             res.json({message:'Thought created'});
         })
         .catch((err)=>{
@@ -38,7 +38,7 @@ const thoughtsController = {
     
     deleteNewThoughts(req, res) {
         thoughts.findOneAndRemove({_id: req. params.thoughtsID})
-            .then((userDataDB) => {
+            .then((socialNetwork) => {
                 
                 return User.findOneAndUpdate(
                     { thoughts: req.params.thoughtID },
@@ -47,7 +47,7 @@ const thoughtsController = {
                 );
 
             })
-            .then((userDataDB) => {
+            .then((socialNetwork) => {
                 res.json({message: "Thought deleted."});
             })
             .catch((err) => {
@@ -58,8 +58,8 @@ const thoughtsController = {
 
     editThoughts(req, res) {
         thoughts.findOneAndUpdate({_id: req.params.thoughtsID},{$set: req.body}, { runValidators: true, new: true})
-        .then((userDataDB) => {
-            res.json(userDataDB);
+        .then((socialNetwork) => {
+            res.json(socialNetwork);
         })
         .catch((err) =>{
             console.log(err);
@@ -73,9 +73,9 @@ const thoughtsController = {
         { $pull: { reactions: { reactionId: req.params.reactionId } } },
         { runValidators: true, new: true }
       )
-        .then((userDataDB) => {
+        .then((socialNetwork) => {
          
-          res.json(userDataDB);
+          res.json(socialNetwork);
         })
         .catch((err) => {
           console.log(err);
@@ -91,12 +91,12 @@ const thoughtsController = {
         )
         .populate({path: 'reactions', select: '-__v'})
         .select('-__v')
-        .then(userDataDB => {
-            if (!userDataDB) {
+        .then(socialNetwork => {
+            if (!socialNetwork) {
                 res.status(404).json({ message: 'Incorrect reaction!' });
                 return;
             }
-            res.json(userDataDB);
+            res.json(socialNetwork);
         }).catch(err=> {
             console.log(err);
             res.status(500).json(err);
