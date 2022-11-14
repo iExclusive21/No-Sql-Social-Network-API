@@ -1,10 +1,11 @@
-const { Thoughts, Users } = require('../models');
+const { Thought, User, } = require('../models');
 // const User = require('../models/users');
 
 const thoughtsController = {
     getThoughts(req, res) {
-        thoughts.find()
+        Thought.find()
             .then((socialNetworkDb) =>{
+                console.log(socialNetworkDb)
                 res.json(socialNetworkDb)
             })
             .catch((err) => {
@@ -14,7 +15,7 @@ const thoughtsController = {
     },
 
     getThoughtsByID(req, res){
-        thoughts.findOne({ _id: req.params.thoughtsID})
+        Thought.findOne({ _id: req.params.thoughtsID})
         .then((socialNetwork) => {
             res.json(socialNetwork);
         })
@@ -26,7 +27,7 @@ const thoughtsController = {
     }, 
 
     createNewThoughts(req, res){
-        thoughts.create(req.body)
+        Thought.create(req.body)
         .then((socialNetwork)=>{
             res.json({message:'Thought created'});
         })
@@ -37,7 +38,7 @@ const thoughtsController = {
     },
     
     deleteNewThoughts(req, res) {
-        thoughts.findOneAndRemove({_id: req. params.thoughtsID})
+        Thought.findOneAndRemove({_id: req. params.thoughtsID})
             .then((socialNetwork) => {
                 
                 return User.findOneAndUpdate(
@@ -57,7 +58,7 @@ const thoughtsController = {
     },
 
     editThoughts(req, res) {
-        thoughts.findOneAndUpdate({_id: req.params.thoughtsID},{$set: req.body}, { runValidators: true, new: true})
+        Thought.findOneAndUpdate({_id: req.params.thoughtsID},{$set: req.body}, { runValidators: true, new: true})
         .then((socialNetwork) => {
             res.json(socialNetwork);
         })
